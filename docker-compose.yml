@@ -1,0 +1,17 @@
+services:
+  unchained:
+    image: cjgutz/unchained:main
+    container_name: "unchained"
+    ports:
+      - 8080:8080
+  vaultwarden:
+    image: vaultwarden/server:latest
+    container_name: "vaultwarden"
+    ports:
+      - 8000:80
+    volumes:
+      - ./vaultwarden-data:/data
+    environment:
+      DOMAIN: https://vault.gutzkow.com
+      ADMIN_TOKEN: "${ADMIN_TOKEN}"
+      SIGNUPS_ALLOWED: "false"
