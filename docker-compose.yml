@@ -1,3 +1,5 @@
+version: "3.3"
+
 services:
   unchained:
     image: cjgutz/unchained:main
