@@ -8,6 +8,10 @@ Click three dots > Mange keys > Add key > JSON > Download to service-key.json
 Share a folder with the service account email address.
 Make the service account first create its own file in the folder
 and retrieve the id of that file. That file is now ready to be updated.
+
+Should run on a scheduler like cron.
+Example cronjob setting:
+0 0 */7 * * /usr/bin/python3 /path/to/google_drive_upload.py
 """
 import os
 
@@ -19,10 +23,11 @@ from google.oauth2 import service_account
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
 BACKUP_FOLDER = os.environ.get("BACKUP_FOLDER", "/tmp/")
-BACKUP_PATH = BACKUP_FOLDER + "vaultwarden-backup.zip"
+BACKUP_PATH = BACKUP_FOLDER + "vaultwarden-backup.tar.gz"
+FOLDER_TO_BACKUP = os.environ.get("FOLDER_TO_BACKUP", "vaultwarden-data")
 
 FILE_ID = os.environ.get("BACKUP_FILE_ID")
-SERVICE_KEY = "service-key.json"
+SERVICE_KEY = os.environ.get("SERVICE_KEY_FILE", "service-key.json")
 
 
 def get_credentials():
@@ -37,7 +42,7 @@ def get_credentials():
 
 def create_backup_zip():
     os.system(f"mkdir -p {BACKUP_FOLDER}")
-    os.system(f"tar -czvf {BACKUP_PATH} vaultwarden-data")
+    os.system(f"tar -czvf {BACKUP_PATH} {FOLDER_TO_BACKUP}")
 
 
 def delete_backup_zip():
@@ -59,7 +64,7 @@ def main():
         media = MediaFileUpload(BACKUP_PATH, mimetype="application/gzip")
         res = (
             service.files()
-            .update(media_body=media, fields="id,name", fileId=FILE_ID)
+            .update(fileId=FILE_ID, media_body=media, fields="id,name")
             .execute()
         )
         print("Results from upload:", res)

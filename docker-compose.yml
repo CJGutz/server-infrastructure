@@ -1,4 +1,4 @@
-version: "3.3"
+version: "3.9"
 
 services:
   unchained:
@@ -6,6 +6,7 @@ services:
     container_name: "unchained"
     ports:
       - 8080:8080
+    restart: unless-stopped
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
@@ -13,7 +14,20 @@ services:
       - 8000:80
     volumes:
       - ./vaultwarden-data:/data
+    env_file:
+      - .env
     environment:
-      DOMAIN: https://vault.gutzkow.com
+      DOMAIN: "${VAULT_DOMAIN}"
       ADMIN_TOKEN: "${ADMIN_TOKEN}"
       SIGNUPS_ALLOWED: "false"
+  drive_backup:
+    build:
+      context: ./drive_backup/
+      dockerfile: ./Dockerfile
+    container_name: drive_backup
+    volumes:
+      - ./vaultwarden-data/:/app/vaultwarden-data
+    env_file:
+      - .env
+    depends_on: 
+      - vaultwarden
