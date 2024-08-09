@@ -12,6 +12,10 @@ and retrieve the id of that file. That file is now ready to be updated.
 Should run on a scheduler like cron.
 Example cronjob setting:
 0 0 */7 * * /usr/bin/python3 /path/to/google_drive_upload.py
+
+On the first run, you can aquire the file id by running the script with the 
+`create` method instead of `update` and remove the FILE_ID parameter. 
+After upload, the file id will be displayed and can then be added as an env variable.
 """
 import os
 
