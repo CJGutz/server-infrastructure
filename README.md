@@ -3,7 +3,7 @@
 **Setup for services on personal server**
 
 Services currently running:
-- Website at [gutzkow.com](https://www.gutzkow.com)
+- Website at [gutzkow.com](https://www.gutzkow.com). Image from [unchained](https://github.com/CJGutz/unchained)
 - Vaultwarden passwordmanager
 - Backups of vaultwarden to google drive
 
