@@ -22,8 +22,8 @@ from google.oauth2 import service_account
 
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
-BACKUP_FOLDER = os.environ.get("BACKUP_FOLDER", "/tmp/")
-BACKUP_PATH = BACKUP_FOLDER + "vaultwarden-backup.tar.gz"
+TMP_BACKUP_STORAGE = os.environ.get("TMP_BACKUP_STORAGE", "/tmp/")
+BACKUP_PATH = TMP_BACKUP_STORAGE + "vaultwarden-backup.tar.gz"
 FOLDER_TO_BACKUP = os.environ.get("FOLDER_TO_BACKUP", "vaultwarden-data")
 
 FILE_ID = os.environ.get("BACKUP_FILE_ID")
@@ -41,7 +41,7 @@ def get_credentials():
 
 
 def create_backup_zip():
-    os.system(f"mkdir -p {BACKUP_FOLDER}")
+    os.system(f"mkdir -p {TMP_BACKUP_STORAGE}")
     os.system(f"tar -czvf {BACKUP_PATH} {FOLDER_TO_BACKUP}")
 
 
