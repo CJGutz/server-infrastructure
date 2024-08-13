@@ -20,11 +20,11 @@ services:
       DOMAIN: "${VAULT_DOMAIN}"
       ADMIN_TOKEN: "${ADMIN_TOKEN}"
       SIGNUPS_ALLOWED: "false"
-  drive_backup:
+  cronjobs:
     build:
-      context: ./drive_backup/
-      dockerfile: ./Dockerfile
-    container_name: drive_backup
+      context: .
+      dockerfile: ./cron/Dockerfile
+    container_name: cronjobs
     volumes:
       - ./vaultwarden-data/:/app/vaultwarden-data
     env_file:
