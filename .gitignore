@@ -4,3 +4,4 @@ __pycache__/
 .env
 vaultwarden-data
 service-key.json
+nginx_secrets/
