@@ -31,9 +31,10 @@ services:
       - .env
     depends_on: 
       - vaultwarden
-  nginx:
+  nginx_certbot:
     image: jonasal/nginx-certbot:latest
     restart: unless-stopped
+    container_name: nginx_certbot
     env_file:
       - .env
     ports:
