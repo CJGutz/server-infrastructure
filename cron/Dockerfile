@@ -5,7 +5,7 @@ WORKDIR /app
 COPY cron/cronjobs /etc/crontabs/root
 
 # Copy over files needed to run drive backup
-COPY drive_backup/* .
+COPY drive_backup/ ./
 RUN pip install --upgrade -r requirements.txt
 
 # Copy over files to renew letsencrypt certificates
