@@ -6,6 +6,7 @@ Services currently running:
 - Website at [gutzkow.com](https://www.gutzkow.com). Image from [unchained](https://github.com/CJGutz/unchained)
 - Vaultwarden passwordmanager
 - Backups of vaultwarden to google drive
+- Nginx and certbot for reverse proxy and letsencrypt certificates
 
 ## Installation and Setup
 
@@ -28,6 +29,5 @@ _This assumes the container running vaultwarden is named `vaultwarden` as the `d
 
 **To start services, run:**
 ```sh
-chmod +x setup.sh # To make executable the first time
-./setup.sh
+sh setup.sh
 ```

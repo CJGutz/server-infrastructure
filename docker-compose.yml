@@ -4,14 +4,10 @@ services:
   unchained:
     image: cjgutz/unchained:main
     container_name: "unchained"
-    ports:
-      - 8080:8080
     restart: unless-stopped
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
-    ports:
-      - 8000:80
     volumes:
       - ./vaultwarden-data:/data
     env_file:
@@ -26,8 +22,20 @@ services:
       dockerfile: ./cron/Dockerfile
     container_name: cronjobs
     volumes:
-      - ./vaultwarden-data/:/app/vaultwarden-data
+      - ./vaultwarden-data/:/app/vaultwarden-data:ro
     env_file:
       - .env
     depends_on: 
       - vaultwarden
+  nginx_certbot:
+    image: jonasal/nginx-certbot:latest
+    restart: unless-stopped
+    container_name: nginx_certbot
+    env_file:
+      - .env
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./nginx_secrets:/etc/letsencrypt
+      - ./nginx_servers:/etc/nginx/user_conf.d
