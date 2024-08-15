@@ -29,5 +29,5 @@ _This assumes the container running vaultwarden is named `vaultwarden` as the `d
 
 **To start services, run:**
 ```sh
-bash setup.sh
+sh setup.sh
 ```
