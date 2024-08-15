@@ -22,7 +22,7 @@ services:
       dockerfile: ./cron/Dockerfile
     container_name: cronjobs
     volumes:
-      - ./vaultwarden-data/:/app/vaultwarden-data
+      - ./vaultwarden-data/:/app/vaultwarden-data:ro
     env_file:
       - .env
     depends_on: 
