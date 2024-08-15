@@ -4,14 +4,10 @@ services:
   unchained:
     image: cjgutz/unchained:main
     container_name: "unchained"
-    ports:
-      - 8080:8080
     restart: unless-stopped
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
-    ports:
-      - 8000:80
     volumes:
       - ./vaultwarden-data:/data
     env_file:
@@ -42,4 +38,4 @@ services:
       - 443:443
     volumes:
       - ./nginx_secrets:/etc/letsencrypt
-      - ./user_conf.d:/etc/nginx/user_conf.d
+      - ./nginx_servers:/etc/nginx/user_conf.d
