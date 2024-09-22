@@ -12,6 +12,8 @@ services:
   psych-game:
     image: cjgutz/psych_game:latest
     container_name: "psych_game"
+    volumes:
+      - ./psych-game-pg-data:/var/lib/postgresql/data
     restart: unless-stopped
     env_file:
       - .env
