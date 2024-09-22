@@ -9,6 +9,16 @@ services:
     image: cjgutz/sofia_portfolio:latest
     container_name: "sofia_portfolio"
     restart: unless-stopped
+  psych-game:
+    image: cjgutz/psych_game:latest
+    container_name: "psych_game"
+    restart: unless-stopped
+    depends_on:
+      - psych-game-db
+  psych-game-db:
+    image: postgres:12.20-alpine3.20
+    container_name: "psych_game_db"
+    restart: unless-stopped
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
