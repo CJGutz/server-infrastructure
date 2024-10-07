@@ -23,6 +23,7 @@ from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from google.oauth2 import service_account
+import time
 
 SCOPES = ["https://www.googleapis.com/auth/drive.file"]
 
@@ -30,6 +31,7 @@ TMP_BACKUP_STORAGE = os.environ.get("TMP_BACKUP_STORAGE", "/tmp/")
 BACKUP_PATH = TMP_BACKUP_STORAGE + "vaultwarden-backup.tar.gz"
 FOLDER_TO_BACKUP = os.environ.get("FOLDER_TO_BACKUP", "vaultwarden-data")
 
+PARENT_FOLDER_ID = os.environ.get("BACKUP_PARENT_FOLDER_ID")
 FILE_ID = os.environ.get("BACKUP_FILE_ID")
 SERVICE_KEY = os.environ.get("SERVICE_KEY_FILE", "service-key.json")
 
@@ -61,6 +63,9 @@ def main():
 
     create_backup_zip()
 
+    file_name = time.strftime("%Y-%m-%d-%H%M") + "-vault-backup" + ".tar.gz"
+    file_metadata = {"name": file_name, "parents": [PARENT_FOLDER_ID]}
+
     service = None
     try:
         service = build("drive", "v3", credentials=creds)
@@ -68,7 +73,7 @@ def main():
         media = MediaFileUpload(BACKUP_PATH, mimetype="application/gzip")
         res = (
             service.files()
-            .update(fileId=FILE_ID, media_body=media, fields="id,name")
+            .create(body=file_metadata, media_body=media, fields="id,name")
             .execute()
         )
         print("Results from upload:", res)
