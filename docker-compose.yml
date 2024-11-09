@@ -29,7 +29,7 @@ services:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
     volumes:
-      - ./vaultwarden-data:/data
+      - vaultwarden-data:/data
     env_file:
       - .env
     environment:
@@ -42,7 +42,7 @@ services:
       dockerfile: ./cron/Dockerfile
     container_name: cronjobs
     volumes:
-      - ./vaultwarden-data/:/app/vaultwarden-data:ro
+      - vaultwarden-data/:/app/vaultwarden-data:ro
     env_file:
       - .env
     depends_on: 
@@ -62,4 +62,6 @@ services:
 
 volumes:
   psych-game-db-data:
+    driver: local
+  vaultwarden-data:
     driver: local
