@@ -12,8 +12,6 @@ services:
   psych-game:
     image: cjgutz/psych_game:latest
     container_name: "psych_game"
-    volumes:
-      - ./psych-game-pg-data:/var/lib/postgresql/data
     restart: unless-stopped
     env_file:
       - .env
@@ -25,6 +23,8 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    volumes:
+      - psych-game-db-data:/var/lib/postgresql/data
   vaultwarden:
     image: vaultwarden/server:latest
     container_name: "vaultwarden"
@@ -59,3 +59,7 @@ services:
     volumes:
       - ./nginx_secrets:/etc/letsencrypt
       - ./nginx_servers:/etc/nginx/user_conf.d
+
+volumes:
+  psych-game-db:
+    driver: local
