@@ -61,5 +61,5 @@ services:
       - ./nginx_servers:/etc/nginx/user_conf.d
 
 volumes:
-  psych-game-db:
+  psych-game-db-data:
     driver: local
