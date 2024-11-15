@@ -14,7 +14,7 @@ services:
     container_name: "psych_game"
     restart: unless-stopped
     env_file:
-      - .env
+      - .game-env
     depends_on:
       - psych-game-db
   psych-game-db:
@@ -22,7 +22,7 @@ services:
     container_name: "psych_game_db"
     restart: unless-stopped
     env_file:
-      - .env
+      - .game-env
     volumes:
       - psych-game-db-data:/var/lib/postgresql/data
   vaultwarden:
@@ -42,7 +42,7 @@ services:
       dockerfile: ./cron/Dockerfile
     container_name: cronjobs
     volumes:
-      - vaultwarden-data/:/app/vaultwarden-data:ro
+      - vaultwarden-data:/app/vaultwarden-data:ro
     env_file:
       - .env
     depends_on: 
