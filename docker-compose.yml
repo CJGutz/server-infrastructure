@@ -5,10 +5,6 @@ services:
     image: cjgutz/unchained:main
     container_name: "unchained"
     restart: unless-stopped
-  sofia_portfolio:
-    image: cjgutz/sofia_portfolio:latest
-    container_name: "sofia_portfolio"
-    restart: unless-stopped
   psych-game:
     image: cjgutz/psych_game:latest
     container_name: "psych_game"
