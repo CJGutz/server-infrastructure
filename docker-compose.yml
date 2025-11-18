@@ -56,21 +56,6 @@ services:
       - ./nginx_secrets:/etc/letsencrypt
       - ./nginx_servers:/etc/nginx/user_conf.d
 
-  pgadmin4:
-    image: dpage/pgadmin4:latest
-    environment:
-      - PGADMIN_DEFAULT_EMAIL=some.random.email@randommail.com
-      - PGADMIN_DEFAULT_PASSWORD=randompassword
-      - MASTER_PASSWORD_REQUIRED=False
-  pgadmin_db_tester:
-    image: postgis/postgis:13-master
-    container_name: pg-conversion-tester
-    environment:
-      - DB_HOST=localhost
-      - POSTGRES_DB=devdb
-      - POSTGRES_USER=devuser
-      - POSTGRES_PASSWORD=devpassword
-
 volumes:
   psych-game-db-data:
     driver: local
